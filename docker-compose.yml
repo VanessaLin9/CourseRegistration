@@ -1,17 +1,30 @@
-version: '3.8'
-
 services:
-  mssql:
+  db:
     image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: course-registration-db
+    platform: linux/amd64
+    container_name: course-registration-sql
     ports:
       - "1433:1433"
     environment:
-      SA_PASSWORD: "${MSSQL_SA_PASSWORD}"
+      SA_PASSWORD: ${MSSQL_SA_PASSWORD}
       ACCEPT_EULA: "Y"
     volumes:
-      - mssql-data:/var/opt/mssql
-    restart: unless-stopped
+      - ./CourseRegistration/DataBase:/sql
+      - mssql-data:/var/opt/mssql 
 
+  db-init:
+    image: mcr.microsoft.com/mssql-tools
+    platform: linux/amd64
+    container_name: course-registration-db-init
+    depends_on:
+      - db
+    volumes:
+      - ./CourseRegistration/DataBase:/sql
+    entrypoint: /bin/bash
+    command: >
+      -c "
+        sleep 15 &&
+        /opt/mssql-tools/bin/sqlcmd -S db -U sa -P ${MSSQL_SA_PASSWORD} -i /sql/Init.sql
+      "
 volumes:
   mssql-data:

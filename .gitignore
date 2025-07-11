@@ -1,0 +1,37 @@
+# Build output
+bin/
+obj/
+*.dll
+*.exe
+
+# User-specific files
+.vscode/
+*.user
+*.suo
+
+# .NET generated files
+*.pdb
+*.dbmdl
+*.cache
+*.log
+
+# Test coverage reports
+TestResults/
+CoverageReport/
+coverage*.xml
+
+# Environment variables
+.env
+
+# Docker-related
+mssql-data/
+docker-compose.override.yml
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Others
+*.swp
+*.bak
+*.tmp

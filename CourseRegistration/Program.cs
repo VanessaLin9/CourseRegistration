@@ -1,4 +1,5 @@
 using CourseRegistration.Interfaces;
+using CourseRegistration.Repositories;
 using CourseRegistration.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,7 @@ builder.Services.AddSwaggerGen();
 builder.WebHost.UseUrls("http://localhost:5000", "https://localhost:5001");
 
 builder.Services.AddScoped<IClassService, ClassService>();
+builder.Services.AddScoped<IClassRepository, ClassRepository>();
 builder.Services.AddControllers();
 
 var app = builder.Build();
